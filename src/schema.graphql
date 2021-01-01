@@ -1,0 +1,51 @@
+type Query {
+  me: User!
+  users(query: String): [User]!
+  comments: [Comment]!
+}
+
+type Mutation {
+  createUser(data: createUserInput): User
+  createComment(data: createCommentInput): Comment!
+  deleteUser(userId: String!): String
+  updateUser(id: String!, data: updatedUserInput): String
+}
+
+type Subscription{
+  comment(authorId:String): CommentSubscriptionType!
+}
+
+type CommentSubscriptionType{
+  mutation:String!
+  data:Comment!
+}
+
+
+type User {
+  id: ID
+  name: String
+  email: String!
+  password: String!
+  comments: [Comment!]
+}
+
+type Comment {
+  id: String!
+  title: String!
+  author: User!
+}
+
+
+input updatedUserInput {
+  email: String
+  name: String
+}
+
+input createUserInput {
+  email: String!
+  password: String!
+}
+input createCommentInput {
+  title: String
+  author: String!
+}
